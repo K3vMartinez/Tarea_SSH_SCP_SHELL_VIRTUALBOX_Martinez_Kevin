@@ -13,3 +13,13 @@ Lo primero que debemos hacer en la máquina virtual es crear una red NAT.
 ![CambioNombre](/img/img03_vbox.png)
 4. Ya tenemos la red NAT:
 ![redNATCreada](/img/img04_vbox.png)
+
+> Creación de servidor. Con un Ubuntu server sin entorno gráfico.
+* Usuario: sergio
+* Contraseña: sergio
+
+1. Antes de instalar la máquina virtual con el servidor debemos asignarle la red NAT que hemos creado antes:
+![AsginaciónRedServidor](/img/img01_mvServidor.png)
+2. En la instalación, seguimos todos los pasos e introducimos el nombre de usuario y la contraseña y cuando esté todo listo, tendremos el servidor creado:
+![UsuarioYContraseña](/img/img02_mvServidor.png)
+![ServidorCreadoYLogeado](/img/img03_mvServidor.png)

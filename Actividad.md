@@ -33,3 +33,64 @@ Lo primero que debemos hacer en la máquina virtual es crear una red NAT.
 2. En la instalación seguimos todos los pasos e introducimos el nombre de usuario y contraseña. Cuando esté listo, tendremos el entorno gráfico creado:
 ![UsuarioYContraseña](/img/img02_mvCasa.png)
 ![EntornoCreadoYLogeado](/img/img03_mvCasa.png)
+
+> Muestra el redireccionamiento de puetos (port forward).
+1. Antes de nada, debemos mirar la IP que tiene asignada ambas máquinas virtuales con el siguiente comando:
+```bash
+ip a
+```
+En el servidor podemos ver que tengo esta IP:
+![IPServidor](/img/img01_puertos.png)
+En el de casa tenemos esta IP:
+![IPCasa](/img/img02_puertos.png)
+2. Ahora lo que debemos hacer es ir a la configuración de herramientas de VirtualBox, seleccionar la redNAT que hemos creado antes (RedNAT_Despliegue), seleccionamos la pestaña de reenvío de puertos y le damos al icono de abajo a la derecha para agregar una nueva regla de envío:
+![AgregarPuertos](/img/img03_puertos.png)
+Cuando agregremos las reglas de envío, debemos asignarle un nombre apropiado, ambas con IP anfitrión 127.0.0.1, puerto anfitrión 808x (la x es un número el cual es recomendable que termine en el mismo número  que termina nuestra IP de invitado), IP invitado (10.0.2.x), el cual debe ser igual que las IP que hemos mirado antes y puerto invitado (80).
+![PuertosAgregados](/img/img04_puertos.png)
+
+Ahora debemos hacer unas actualizaciones en nuestras máquinas virtuales. Para ello es recomendable hacer lo siguiente:
+Comprobamos que tiene conexión a Internet:
+```bash
+curl google.es
+```
+# Linux Shell 
+
+> Instala o comprueba que ya estén instalados los servicios: openssh-server y ufw.
+
+Debemos realizar los pasos tanto en el Servidor como en Casa.
+1. Instalamos el ssh:
+```bash
+sudo apt install openssh-server
+```
+2. Comprobamos estado del ssh:
+```bash
+sudo systemctl status ssh
+```
+![estadoSSHServidor](/img/img01_sshServidor.png)
+![estadoSSHCasa](/img/img01_sshCasa.png)
+3. Comprobamos estado de ufw:
+```bash
+sudo systemctl status ufw
+```
+![estadoUfwServidor](/img/img02_ufwServidor.png)
+![estadoUfw](/img/img02_ufwCasa.png)
+
+
+
+2. Actualizamos la máquina:
+```bash
+sudo apt update
+```
+3. Instalamos el apache2:
+```bash
+sudo apt install apache2
+```
+4. Miramos si está instalado:
+```bash
+sudo ufw app list
+```
+5. Damos permiso a Apache:
+```bash
+sudo ufw allow Apache
+```
+

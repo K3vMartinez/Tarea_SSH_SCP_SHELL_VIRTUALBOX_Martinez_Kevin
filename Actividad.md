@@ -240,9 +240,35 @@ Cuando agregremos las reglas de envío, debemos asignarle un nombre apropiado, a
 # SCP
 ### Equipo Casa
 > Crea en el equipo Casa una página web index.html como la siguiente con tu nombre y apellidos
-![scp](/img/20img01_scp.png)
+![scp](/img/img01_scp.png)
+
+Para hacer esto, debemos introducir el siguiente comando:
+```bash
+nano index.html
+```
+Escribimos dentro el html con los datos solicitados lo guardamos y le damos a salir.
+![scp](/img/img02_scp.png)
 
 >Copia el archivo anterior en Servidor, en la carpeta /var/www/html
+
+Una vez creado el index.html lo que haremos será copiar el archivo en Servidor con el siguiente comando. La virgulilla y la barra se ponen para indicarle que lo meta en el directorio principal ya que si pones destino no te deja por tema de permisos:
+```bash
+scp -i ./clave_trabajo ./index.html sergio@10.0.2.7:~/
+```
+![scp](/img/img03_scp.png)
+
+Ahora que lo tenemos copiado en Servidor, entramos en el servidor para moverlo a la carpeta que nos indican /var/www/html:
+* Entramos en el servidor:
+```bash
+ssh -i ./clave_trabajo sergio@10.0.2.7
+```
+* Movemos el archivo a la carpeta:
+```bash
+sudo cp index.html /var/www/html/
+```
+![scp](/img/img04_scp.png)
+
+Ya dentro, podemos salir del Sevidor.
 
 >Desde Casa abre un navegador y prueba que puedes acceder a la web.
 

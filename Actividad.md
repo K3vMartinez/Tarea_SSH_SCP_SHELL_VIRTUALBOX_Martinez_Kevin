@@ -34,22 +34,7 @@ Lo primero que debemos hacer en la máquina virtual es crear una red NAT.
 ![UsuarioYContraseña](/img/img02_mvCasa.png)
 ![EntornoCreadoYLogeado](/img/img03_mvCasa.png)
 
-> Muestra el redireccionamiento de puetos (port forward).
-1. Antes de nada, debemos mirar la IP que tiene asignada ambas máquinas virtuales con el siguiente comando:
-```bash
-ip a
-```
-En el servidor podemos ver que tengo esta IP:
-![IPServidor](/img/img01_puertos.png)
-En el de casa tenemos esta IP:
-![IPCasa](/img/img02_puertos.png)
-2. Ahora lo que debemos hacer es ir a la configuración de herramientas de VirtualBox, seleccionar la redNAT que hemos creado antes (RedNAT_Despliegue), seleccionamos la pestaña de reenvío de puertos y le damos al icono de abajo a la derecha para agregar una nueva regla de envío:
-![AgregarPuertos](/img/img03_puertos.png)
-Cuando agregremos las reglas de envío, debemos asignarle un nombre apropiado, ambas con IP anfitrión 127.0.0.1, puerto anfitrión 220x (la x es un número el cual es recomendable que termine en el mismo número  que termina nuestra IP de invitado), IP invitado (10.0.2.x), el cual debe ser igual que las IP que hemos mirado antes y puerto invitado (22).
-![PuertosAgregados](/img/img04_puertos.png)
-
-Ahora debemos hacer unas actualizaciones en nuestras máquinas virtuales. Para ello es recomendable hacer lo siguiente:
-Comprobamos que tiene conexión a Internet:
+Mi recomendación es comprobar que las máquinas virtuales tengan conexión a Internet con el siguiente comando:
 ```bash
 curl google.es
 ```
@@ -89,6 +74,56 @@ sudo ufw allow OpenSSH
 ![cortafuegosUfwServidor](/img/img03_ufwCasa.png)
 
 > Añade en VirtualBox el redireccionamiento de puertos para poder acceder desde el equipo anfitrión a Servidor y Casa con el servicio ssh.
+1. Antes de nada, debemos mirar la IP que tiene asignada ambas máquinas virtuales con el siguiente comando:
+```bash
+ip a
+```
+En el servidor podemos ver que tengo esta IP:
+![IPServidor](/img/img01_puertos.png)
+En el de casa tenemos esta IP:
+![IPCasa](/img/img02_puertos.png)
+2. Ahora lo que debemos hacer es ir a la configuración de herramientas de VirtualBox, seleccionar la redNAT que hemos creado antes (RedNAT_Despliegue), seleccionamos la pestaña de reenvío de puertos y le damos al icono de abajo a la derecha para agregar una nueva regla de envío:
+![AgregarPuertos](/img/img03_puertos.png)
+Cuando agregremos las reglas de envío, debemos asignarle un nombre apropiado, ambas con IP anfitrión 127.0.0.1, puerto anfitrión 220x (la x es un número el cual es recomendable que termine en el mismo número  que termina nuestra IP de invitado), IP invitado (10.0.2.x), el cual debe ser igual que las IP que hemos mirado antes y puerto invitado (22).
+![PuertosAgregados](/img/img04_puertos.png)
+
+# SSH
+## Desde el equipo **Anfitrión**.
+> Conéctate  desde el equipo anfitrión a Servidor.
+
+Para ello debemos abrir la consola en nuestro equipo afitrión y escribir el siguiente comando:
+```bash
+ssh sergio@127.0.0.1 -p 2207
+```
+![conexionAnfiServi](/img/img01_anfitrion.png)
+ 
+ > Para comprobar que estás en el servidor, crea un archivo de texto llamado *servidor.txt*
+
+ Dentro de la consola de nuestro anfitrión y entrado en el servidor a través de la instrucción anterior, creamos un archivo de texto con el siguiente comando:
+ ```bash
+touch servidor.txt
+```
+![archivoTextoEnServidor](/img/img02_anfitrion.png)
+
+Si nos vamos a nuestro Servidor, hacemos la comprobación para ver si hemos creado ese archivo correctamente. Para ello usamos el comando:
+```bash
+ls -la 
+```
+![archivoTextoEnServidor](/img/img03_anfitrion.png)
+> Desconéctate del servidor
+
+Para desconectarnos de un servidor debemos introducir el siguiente comando:
+```bash
+exit
+```
+![desconexionServidor](/img/img04_anfitrion.png)
+
+## Desde el equipo Casa
+
+
+
+
+
 
 
 

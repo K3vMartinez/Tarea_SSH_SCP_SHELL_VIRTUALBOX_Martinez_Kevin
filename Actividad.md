@@ -88,7 +88,8 @@ Cuando agregremos las reglas de envío, debemos asignarle un nombre apropiado, a
 ![PuertosAgregados](/img/img04_puertos.png)
 
 # SSH
-## Desde el equipo **Anfitrión**.
+## Conexión mediante usuario y contraseña.
+### Desde el equipo **Anfitrión**.
 > Conéctate  desde el equipo anfitrión a Servidor.
 
 Para ello debemos abrir la consola en nuestro equipo afitrión y escribir el siguiente comando:
@@ -97,7 +98,7 @@ ssh sergio@127.0.0.1 -p 2207
 ```
 ![conexionAnfiServi](/img/img01_anfitrion.png)
  
- > Para comprobar que estás en el servidor, crea un archivo de texto llamado *servidor.txt*
+ > Para comprobar que estás en el servidor, crea un archivo de texto llamado *servidor.txt*.
 
  Dentro de la consola de nuestro anfitrión y entrado en el servidor a través de la instrucción anterior, creamos un archivo de texto con el siguiente comando:
  ```bash
@@ -118,30 +119,133 @@ exit
 ```
 ![desconexionServidor](/img/img04_anfitrion.png)
 
-## Desde el equipo Casa
+### Desde el equipo Casa
 > Conéctate desde Casa a Servidor.
-sudo
 
-
-
-
-
-
-
-2. Actualizamos la máquina:
+Para ello debemos abrir la consola en Casa y escribir el siguiente comando:
 ```bash
-sudo apt update
+ssh sergio@10.0.2.7 -p 22
 ```
-3. Instalamos el apache2:
+![conexionCasaServidor](/img/img01_conexionCasaServidor.png)
+> Para comprobar que estás en el servidor, crea un archivo de texto llamado *casa.txt*.
+
+Dentro de la consola de casa y entrado en el servidor a través de la instrucción anterior, creamos un archivo de texto con el siguiente comando:
+ ```bash
+touch casa.txt
+```
+![archivoTextoEnServidor](/img/img02_conexionCasaServidor.png)
+Si nos vamos a nuestro Servidor, hacemos la comprobación para ver si hemos creado ese archivo correctamente. Para ello usamos el comando:
+```bash
+ls -la 
+```
+![archivoTextoEnServidor](/img/img03_conexionCasaServidor.png)
+> Desconéctate del servidor
+
+Para desconectarnos de un servidor debemos introducir el siguiente comando:
+```bash
+exit
+```
+![desconexionServidor](/img/img04_conexionCasaServidor.png)
+
+## Conexión mediante claves asimétricas.
+### Equipo Casa:
+> Crea un par de claves con el protocolo ed25519 y con el nombre claves_trabajo.
+
+Para crear una clave con el protocolo ed25519 debemos introducir en Casa el siguiente comando:
+```bash
+ssh-keygen -t ed25519
+```
+Y dentro debemos introducie el nombre:
+![claveAsimetrica](/img/img01_claveAsimetrica.png)
+Para comprobar que están creada podemos introducir el comando:
+```bash
+ls -la
+```
+![claveAsimetrica](/img/img02_claveAsimetrica.png)
+> Exporta la clave al Servidor.
+
+Para ello, dentro de la consola de carmen debemos introducir el siguiente comando, el cual le indicamos qué queremos exportar junto con la IP del Servidor. La primera vez que hagamos esto, nos pedirá la contraseña del Servidor:
+```bash
+ssh-copy-id -p 22 -i ./clave_trabajo.pub sergio@10.0.2.7
+```
+![claveAsimetrica](/img/img03_claveAsimetrica.png)
+
+> Conéctate desde Casa a Servidor mediante la clave clave_trabajo:
+
+Para ello introducimos el siguiente código y ya no sería necesario introducir la contraseña:
+```bash
+ssh -i ./clave_trabajo sergio@10.0.2.7
+```
+![claveAsimetrica](/img/img04_claveAsimetrica.png)
+
+> Para comprobar que estás en el servidor, crea un archivo de texto llamado *claves.txt*
+
+Dentro de la consola de casa y entrado en el servidor a través de la instrucción anterior, creamos un archivo de texto con el siguiente comando:
+ ```bash
+touch claves.txt
+```
+![claveAsimetrica](/img/img05_claveAsimetrica.png)
+Si nos vamos a nuestro Servidor, hacemos la comprobación para ver si hemos creado ese archivo correctamente. Para ello usamos el comando:
+```bash
+ls -la 
+```
+![claveAsimetrica](/img/img06_claveAsimetrica.png)
+> Desconéctate del servidor
+
+Para desconectarnos de un servidor debemos introducir el siguiente comando:
+```bash
+exit
+```
+![claveAsimetrica](/img/img07_claveAsimetrica.png)
+
+# Apache
+> Conéctate desde Casa a Servidor mediante la clave_trabajo
+
+Para ello entramos desde Casa a Servidor con el siguiente comando:
+```bash
+ssh -i ./clave_trabajo sergio@10.0.2.7
+```
+![apache](/img/img01_apache.png)
+> Instala en el equipo Servidor el servidcio apache2.
+Una vez dentro del servidor (gracias al paso anterior), instalamos el apache2 con el siguiente comando:
 ```bash
 sudo apt install apache2
 ```
-4. Miramos si está instalado:
+> Comprueba que el servicio apache2 está activo y en funcionamiento.
+
+Con el comando siguiente comprobamos el estado de apache2:
+```bash
+sudo systemctl status apache2
+```
+![apache](/img/img02_apache.png)
+
+> Añade la regla en el cortafuegos para apache2.
+
+Para ello hay que seguir los siguientes pasos introduciendo los siguientes comandos:
+1. Ver qué aplicaciones hay disponibles:
 ```bash
 sudo ufw app list
 ```
-5. Damos permiso a Apache:
+2. Añadir la regla en el cortafuegos:
 ```bash
 sudo ufw allow Apache
 ```
+![apache](/img/img03_apache.png)
+
+> Añade en VirtualBox el redireccionamiento de puertos para poder acceder desde el equipo anfitrión al Servidor con el servicio apache2.
+
+Cuando agregremos las reglas de envío, debemos asignarle un nombre apropiado, ambas con IP anfitrión 127.0.0.1, puerto anfitrión 808x (la x es un número el cual es recomendable que termine en el mismo número  que termina nuestra IP de invitado), IP invitado (10.0.2.x), el cual debe ser igual que las IP que hemos mirado antes y puerto invitado (80).
+![apache](/img/img04_apache.png)
+
+# SCP
+### Equipo Casa
+> Crea en el equipo Casa una página web index.html como la siguiente con tu nombre y apellidos
+![scp](/img/20img01_scp.png)
+
+>Copia el archivo anterior en Servidor, en la carpeta /var/www/html
+
+>Desde Casa abre un navegador y prueba que puedes acceder a la web.
+
+### Equipo Anfitrión
+> Desde el equipo anfitrión abre un navegador web y prueba que puedes acceder a la web.
 

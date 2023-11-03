@@ -45,7 +45,7 @@ En el de casa tenemos esta IP:
 ![IPCasa](/img/img02_puertos.png)
 2. Ahora lo que debemos hacer es ir a la configuración de herramientas de VirtualBox, seleccionar la redNAT que hemos creado antes (RedNAT_Despliegue), seleccionamos la pestaña de reenvío de puertos y le damos al icono de abajo a la derecha para agregar una nueva regla de envío:
 ![AgregarPuertos](/img/img03_puertos.png)
-Cuando agregremos las reglas de envío, debemos asignarle un nombre apropiado, ambas con IP anfitrión 127.0.0.1, puerto anfitrión 808x (la x es un número el cual es recomendable que termine en el mismo número  que termina nuestra IP de invitado), IP invitado (10.0.2.x), el cual debe ser igual que las IP que hemos mirado antes y puerto invitado (80).
+Cuando agregremos las reglas de envío, debemos asignarle un nombre apropiado, ambas con IP anfitrión 127.0.0.1, puerto anfitrión 220x (la x es un número el cual es recomendable que termine en el mismo número  que termina nuestra IP de invitado), IP invitado (10.0.2.x), el cual debe ser igual que las IP que hemos mirado antes y puerto invitado (22).
 ![PuertosAgregados](/img/img04_puertos.png)
 
 Ahora debemos hacer unas actualizaciones en nuestras máquinas virtuales. Para ello es recomendable hacer lo siguiente:
@@ -74,6 +74,21 @@ sudo systemctl status ufw
 ```
 ![estadoUfwServidor](/img/img02_ufwServidor.png)
 ![estadoUfw](/img/img02_ufwCasa.png)
+
+> Añade la regla en el cortafuegos para ssh.
+
+1. Ver qué aplicaciones hay disponibles:
+```bash
+sudo ufw app list
+```
+2. Añadir la regla en el cortafuegos:
+```bash
+sudo ufw allow OpenSSH
+```
+![cortafuegosUfwServidor](/img/img03_ufwServidor.png)
+![cortafuegosUfwServidor](/img/img03_ufwCasa.png)
+
+> Añade en VirtualBox el redireccionamiento de puertos para poder acceder desde el equipo anfitrión a Servidor y Casa con el servicio ssh.
 
 
 

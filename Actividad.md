@@ -119,7 +119,8 @@ exit
 ![desconexionServidor](/img/img04_anfitrion.png)
 
 ## Desde el equipo Casa
-
+> Conéctate desde Casa a Servidor.
+sudo
 
 
 

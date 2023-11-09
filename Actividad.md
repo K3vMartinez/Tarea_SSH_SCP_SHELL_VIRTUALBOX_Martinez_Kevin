@@ -272,6 +272,31 @@ Ya dentro, podemos salir del Sevidor.
 
 >Desde Casa abre un navegador y prueba que puedes acceder a la web.
 
+Con Casa sólo tenemos que abrir el navegador e introducir la URL que hemos establecido con el servidor, es decir:
+
+10.0.2.7 --> IP de anfitrión para el servidor
+
+![navegador](/img/img03_navegador.png)
+
+Y ya vemos que estamos conectados desde nuestro equipo Casa al servidor:
+
+![navegador](/img/img04_navegador.png)
+
+
 ### Equipo Anfitrión
 > Desde el equipo anfitrión abre un navegador web y prueba que puedes acceder a la web.
+
+Con el equipo anfitrión sólo tenemos que abrir el navegador e introducir la URL que hemos establecido con el servidor, es decir:
+
+127.0.0.1 --> IP de anfitrión
+
+8087 --> Puerto anfitrión
+
+![navegador](/img/img01_navegador.png)
+
+127.0.0.1:8087
+
+Y ya vemos que estamos conectados desde nuestro equipo anfitrión al servidor:
+
+![navegador](/img/img02_navegador.png)
 
